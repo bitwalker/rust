@@ -66,3 +66,9 @@ fn lang_start<T: crate::process::Termination + 'static>(
 ) -> isize {
     lang_start_internal(&move || main().report(), argc, argv)
 }
+
+#[cfg(not(test))]
+#[export_name = "lang_start"]
+pub fn start(main: fn() -> i32, argc: isize, argv: *const *const u8) -> isize {
+    lang_start(main, argc, argv)
+}
